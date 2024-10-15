@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from helper.databaseSetup import URL
+from helper.logic import generateTinyUrl
 
 app = Flask(__name__)
 
@@ -9,14 +9,10 @@ def home():
 
 @app.route('/fetchUrl', methods=['POST'])
 def getUrl():
-    
     user_url = request.args.get('userUrl')
-    tiny_url = request.args.get('tinyUrl')
-    up_time = request.args.get('upTime', default=0, type=int)
-   
     if user_url:
-        url_instance = URL(userUrl=user_url, tinyUrl=tiny_url, upTime=up_time)
-        return f"Fetched URL: {url_instance.userUrl}, Tiny URL: {url_instance.tinyUrl}, Up Time: {url_instance.upTime} seconds"
+        url_instance = generateTinyUrl(user_url)
+        return url_instance , 200
     else:
         return "No user URL provided.", 400
 
