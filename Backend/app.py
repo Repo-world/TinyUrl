@@ -7,7 +7,7 @@ app = Flask(__name__)
 def home():
     return 'hello world'  # Returning a simple string as a response
 
-@app.route('/fetchUrl', methods=['POST'])
+@app.route('/fetchUrl', methods=['GET'])
 def getUrl():
     user_url = request.args.get('userUrl')
     if user_url:
